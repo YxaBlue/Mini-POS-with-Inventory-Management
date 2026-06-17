@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory · MiniPOS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="../../../styles/global-styles.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../components/toast/toast.css">
+    <link rel="stylesheet" href="../../components/modal/modal.css">
+    <link rel="stylesheet" href="../../components/product-table/product-table.css">
+    <link rel="stylesheet" href="inventory.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+    <div class="app-shell">
+        <div id="sidebar-mount"></div>
+
+        <div class="app-main">
+            <header class="header">
+                <div class="header-left">
+                    <h1>Inventory</h1>
+                    <p class="text-muted">Manage your product catalog</p>
+                </div>
+                <div class="header-right flex items-center gap-2">
+                    <div class="search-box flex items-center gap-2">
+                        <i class="ti ti-search" aria-hidden="true"></i>
+                        <input type="text" id="search-input" class="input" placeholder="Search products…">
+                    </div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                <div class="table-header-bar flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <h3>Products</h3>
+                        <span class="badge badge-neutral" id="row-count">0</span>
+                    </div>
+                    <div class="cat-filter flex gap-1" id="cat-filter"></div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-tbody"></tbody>
+                    </table>
+                </div>
+            </main>
+
+            <button class="fab btn-primary" id="add-product-btn" aria-label="Add product">
+                <i class="ti ti-plus" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ADD/EDIT MODAL -->
+    <div id="form-modal" class="modal-overlay">
+        <div class="modal card">
+            <div class="modal-header flex items-center justify-between">
+                <h3 id="modal-heading">Add product</h3>
+                <button class="btn-icon btn-ghost" id="modal-close-btn" aria-label="Close">
+                    <i class="ti ti-x" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <form id="product-form">
+                <div class="field">
+                    <label class="field-label" for="f-name">Product name</label>
+                    <input type="text" id="f-name" class="input" placeholder="e.g. Wireless Mouse" required>
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="f-category">Category</label>
+                    <select id="f-category" class="select">
+                        <option value="General">General</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Food">Food</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="__new__">+ Add new category…</option>
+                    </select>
+                    <input type="text" id="f-category-new" class="input" placeholder="Type new category name" style="display:none; margin-top: var(--space-2);">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="f-description">Description</label>
+                    <textarea id="f-description" class="input" placeholder="Brief product description…"></textarea>
+                </div>
+
+                <div class="flex gap-2">
+                    <div class="field" style="flex:1">
+                        <label class="field-label" for="f-price">Price (₱)</label>
+                        <input type="number" id="f-price" class="input" placeholder="0.00" min="0" step="0.01" required>
+                    </div>
+                    <div class="field" style="flex:1">
+                        <label class="field-label" for="f-stock">Stock qty</label>
+
+                        <div class="stock-mode-toggle" id="stock-mode-toggle" style="display:none;">
+                            <button type="button" class="mode-btn active" data-mode="add">+ Add</button>
+                            <button type="button" class="mode-btn" data-mode="set">Set exact</button>
+                        </div>
+
+                        <input type="number" id="f-stock" class="input" placeholder="0" min="0" step="1" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer flex justify-between gap-2">
+                    <button type="button" class="btn btn-secondary" id="cancel-form-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submit-btn">
+                        <i class="ti ti-check" aria-hidden="true"></i>
+                        <span id="submit-label">Add product</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal card" style="max-width:320px; text-align:center;">
+            <div class="delete-icon">
+                <i class="ti ti-trash" aria-hidden="true"></i>
+            </div>
+            <h3>Archive product?</h3>
+            <p>This product will be hidden from the catalog. You can restore it from the database later.</p>
+            <div class="modal-footer flex justify-center gap-2">
+                <button class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete-btn">
+                    <i class="ti ti-archive" aria-hidden="true"></i> Archive
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="inventory.js"></script>
+</body>
+</html>

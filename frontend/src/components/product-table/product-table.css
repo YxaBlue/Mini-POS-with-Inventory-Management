@@ -1,0 +1,36 @@
+/* ===== TABLE CELL HELPERS ===== */
+.td-id { font-family: var(--font-mono); color: var(--color-text-muted); font-size: var(--text-xs); }
+.td-name { font-weight: 600; }
+.td-desc {
+    color: var(--color-text-secondary);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.td-price { font-family: var(--font-mono); font-weight: 600; }
+.td-stock { font-family: var(--font-mono); }
+
+.row-actions { display: flex; align-items: center; gap: var(--space-1); opacity: 0; transition: opacity var(--transition-fast); }
+.table tbody tr:hover .row-actions { opacity: 1; }
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-12);
+    color: var(--color-text-muted);
+}
+.empty-state i { font-size: 28px; display: block; margin: 0 auto var(--space-2); }
+
+@media (max-width: 768px) {
+    .table-wrapper { overflow-x: auto; }
+    .table { min-width: 640px; }
+
+    .table th,
+    .table td {
+        font-size: var(--text-xs);
+    }
+
+    .row-actions {
+        opacity: 1;
+    }
+}
