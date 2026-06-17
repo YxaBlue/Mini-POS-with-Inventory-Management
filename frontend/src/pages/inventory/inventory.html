@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../components/toast/toast.css">
     <link rel="stylesheet" href="../../components/modal/modal.css">
     <link rel="stylesheet" href="../../components/product-table/product-table.css">
+    <link rel="stylesheet" href="../../components/search/search.css">
     <link rel="stylesheet" href="inventory.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
@@ -24,10 +25,8 @@
                     <p class="text-muted">Manage your product catalog</p>
                 </div>
                 <div class="header-right flex items-center gap-2">
-                    <div class="search-box flex items-center gap-2">
-                        <i class="ti ti-search" aria-hidden="true"></i>
-                        <input type="text" id="search-input" class="input" placeholder="Search products…">
-                    </div>
+                    <!-- search component mounts here -->
+                    <div id="search-mount"></div>
                 </div>
             </header>
 
@@ -82,16 +81,10 @@
                 </div>
 
                 <div class="field">
-                    <label class="field-label" for="f-category">Category</label>
-                    <select id="f-category" class="select">
-                        <option value="General">General</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Beverages">Beverages</option>
-                        <option value="Food">Food</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="__new__">+ Add new category…</option>
-                    </select>
-                    <input type="text" id="f-category-new" class="input" placeholder="Type new category name" style="display:none; margin-top: var(--space-2);">
+                    <label class="field-label">Category</label>
+                    <div id="category-tags" class="category-tags"></div>
+                    <input type="text" id="f-category-input" class="input" placeholder="Type to add category…">
+                    <div id="category-suggestions" class="category-suggestions"></div>
                 </div>
 
                 <div class="field">
@@ -106,12 +99,6 @@
                     </div>
                     <div class="field" style="flex:1">
                         <label class="field-label" for="f-stock">Stock qty</label>
-
-                        <div class="stock-mode-toggle" id="stock-mode-toggle" style="display:none;">
-                            <button type="button" class="mode-btn active" data-mode="add">+ Add</button>
-                            <button type="button" class="mode-btn" data-mode="set">Set exact</button>
-                        </div>
-
                         <input type="number" id="f-stock" class="input" placeholder="0" min="0" step="1" required>
                     </div>
                 </div>
@@ -133,12 +120,12 @@
             <div class="delete-icon">
                 <i class="ti ti-trash" aria-hidden="true"></i>
             </div>
-            <h3>Archive product?</h3>
-            <p>This product will be hidden from the catalog. You can restore it from the database later.</p>
-            <div class="modal-footer flex justify-center gap-2">
+            <h3>Delete product?</h3>
+            <p>This product will be removed from the catalog.</p>
+            <div class="modal-footer flex justify-between gap-2">
                 <button class="btn btn-secondary" id="cancel-delete-btn">Cancel</button>
                 <button class="btn btn-danger" id="confirm-delete-btn">
-                    <i class="ti ti-archive" aria-hidden="true"></i> Archive
+                    <i class="ti ti-archive" aria-hidden="true"></i> Delete
                 </button>
             </div>
         </div>

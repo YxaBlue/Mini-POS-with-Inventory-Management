@@ -16,9 +16,6 @@ function renderRow(product) {
             <td>${stockBadge(product.stock_quantity)}</td>
             <td>
                 <div class="row-actions">
-                    <button class="btn-icon btn-ghost restock-btn" data-id="${product.id}" aria-label="Restock ${product.name}">
-                        <i class="ti ti-package-import" aria-hidden="true"></i>
-                    </button>
                     <button class="btn-icon btn-ghost edit-btn" data-id="${product.id}" aria-label="Edit ${product.name}">
                         <i class="ti ti-pencil" aria-hidden="true"></i>
                     </button>
@@ -60,9 +57,6 @@ export function renderProductTable(tbodyId, products, handlers = {}) {
         ? renderEmptyState()
         : products.map(renderRow).join("");
 
-    tbody.querySelectorAll(".restock-btn").forEach(btn =>
-        btn.addEventListener("click", () => handlers.onRestock?.(Number(btn.dataset.id)))
-    );
     tbody.querySelectorAll(".edit-btn").forEach(btn =>
         btn.addEventListener("click", () => handlers.onEdit?.(Number(btn.dataset.id)))
     );
