@@ -36,7 +36,7 @@ exports.validateProduct = (req, res, next) => {
 
     if (errors.length > 0) {
         return res.status(400).json({
-            messafe: "Validation failed",
+            message: "Validation failed",
             errors
         });
     }

@@ -5,7 +5,7 @@ const helmet            = require("helmet");
 const rateLimit         = require("express-rate-limit");
 const cors              = require("cors");
 const { errorHandler }  = require("./middleware/errorHandler");
-const allowedOrigins    = ["https://localhost:5500", "http://127.0.0.1:5500"];
+const allowedOrigins    = ["http://localhost:5500", "http://127.0.0.1:5500"];
 
 const app = express();
 
@@ -39,7 +39,9 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 // ROUTES
 const productRoutes = require("./routes/productRoutes");
+const saleRoutes = require("./routes/saleRoutes");
 app.use("/products", productRoutes);
+app.use("/sales", saleRoutes);
 
 // GLOBAL ERROR HANDLER
 app.use(errorHandler);

@@ -1,0 +1,142 @@
+/* ===== HEADER (reuses inventory pattern) ===== */
+.header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    min-height: 88px;
+    padding: var(--space-4) var(--space-6) var(--space-3);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background-color: var(--color-surface);
+    flex-shrink: 0;
+}
+
+
+/* ===== SEARCH ===== */
+.pos-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pos-search-icon {
+    position: absolute;
+    left: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.pos-search-input {
+    padding-left: calc(var(--space-3) + 1.2rem + var(--space-2));
+    width: 240px;
+}
+
+
+/* ===== POS BODY ===== */
+.pos-body {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    flex: 1;
+    overflow: hidden;
+    height: calc(100vh - 88px);  /* full height minus header */
+}
+
+
+/* ===== LEFT: PRODUCTS ===== */
+.pos-products {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--color-bg);
+}
+
+.pos-filter-bar {
+    padding: var(--space-3) var(--space-6);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background-color: var(--color-surface);
+    flex-shrink: 0;
+    overflow-x: auto;
+}
+
+/* reuse cat-filter from inventory.css */
+.cat-filter {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+.cat-filter::-webkit-scrollbar { height: 4px; }
+.cat-filter::-webkit-scrollbar-thumb { background: transparent; border-radius: 999px; }
+.cat-filter:hover { scrollbar-color: var(--color-surface-overlay) transparent; }
+.cat-filter:hover::-webkit-scrollbar-thumb { background: var(--color-surface-overlay); }
+
+.cat-pill {
+    font-size: var(--text-xs);
+    padding: 3px var(--space-3);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    background: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.cat-pill.active, .cat-pill:hover {
+    background-color: var(--color-primary-tint);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.pos-grid-wrap {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-5) var(--space-6);
+}
+
+
+/* ===== RIGHT: CART ===== */
+.pos-cart {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-left: 1px solid var(--color-border-subtle);
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .pos-body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+        height: auto;
+    }
+
+    .pos-products {
+        min-height: 0;
+        max-height: 55vh;
+    }
+
+    .pos-cart {
+        max-height: 45vh;
+        border-left: none;
+        border-top: 1px solid var(--color-border-subtle);
+    }
+
+    .pos-search-input { width: 180px; }
+}
+
+@media (max-width: 600px) {
+    .header {
+        padding-left: calc(var(--space-6) + 48px);
+        flex-direction: row;
+        align-items: center;
+        min-height: unset;
+        padding-bottom: var(--space-2);
+    }
+
+    .header-left h1 { font-size: var(--text-lg); }
+    .header-left p { display: none; }
+
+    .pos-search-input { width: 140px; }
+}

@@ -32,14 +32,18 @@ backend/
 ├── config/
 │   └── database.js
 ├── controllers/
-│   └── productController.js
+│   ├── productController.js
+│   └── saleController.js
 ├── middleware/
-│   └── errorHandler.js
-│   └── validateProduct.js
+│   ├── errorHandler.js
+│   ├── validateProduct.js
+│   └── validateSale.js
 ├── models/
-│   └── productModel.js
+│   ├── productModel.js
+│   └── saleModel.js
 ├── routes/
-│   └── productRoutes.js
+│   ├── productRoutes.js
+│   └── saleRoutes.js
 └── server.js
 
 database/
