@@ -55,15 +55,33 @@ frontend/
 │   ├── api/
 │   │   └── productAPI.js
 │   ├── components/
+│   │   ├── cart/
+│   │   │   ├── cart.css
+│   │   │   └── cart.js
+│   │   ├── cat-filter/
+│   │   │   ├── cat-filter.css
+│   │   │   └── cat-filter.js
 │   │   ├── modal/
 │   │   │   ├── modal.css
 │   │   │   └── modal.js
+│   │   └── product-card/
+│   │   │   ├── product-card.css
+│   │   │   └── product-card.js
 │   │   └── product-table/
 │   │   │   ├── product-table.css
 │   │   │   └── product-table.js
+│   │   └── receipt-modal/
+│   │   │   ├── receipt-modal.css
+│   │   │   └── receipt-modal.js
+│   │   ├── search/
+│   │   │   ├── search.css
+│   │   │   └── search.js
 │   │   ├── sidebar/
 │   │   │   ├── sidebar.css
 │   │   │   └── sidebar.js
+│   │   ├── subheader/
+│   │   │   ├── subheader.css
+│   │   │   └── subheader.js
 │   │   ├── toast/
 │   │   │   ├── toast.css
 │   │   │   └── toast.js
@@ -74,7 +92,13 @@ frontend/
 │   │   │   ├── inventory.js
 │   │   │   └── inventory.html
 │   │   ├── pos/
+│   │   │   ├── pos.css
+│   │   │   ├── pos.js
+│   │   │   └── pos.html
 │   │   └── sales/
+│   │       ├── sales.css
+│   │       ├── sales.js
+│   │       └── sales.html
 │   └── main.js
 ├── styles/
 │   └── global-styles.css

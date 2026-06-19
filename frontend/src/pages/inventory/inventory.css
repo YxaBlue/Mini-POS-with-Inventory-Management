@@ -14,92 +14,33 @@
 }
 .fab i { font-size: 22px; }
 
-
-
-/* ===== HEADER ===== */
-.header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    min-height: 88px;
-    padding: var(--space-4) var(--space-6) var(--space-3);
-    border-bottom: 1px solid var(--color-border-subtle);
-    background-color: var(--color-surface);
+#cat-filter-mount {
+    flex-shrink: 0;
+    width: 500px; /* desktop fixed width */
+    overflow-x: auto;
 }
-
-
 
 /* ===== TABLE HEADER BAR ===== */
 .table-header-bar { margin-bottom: var(--space-3); }
 
-.cat-pill {
-    font-size: var(--text-xs);
-    padding: 3px var(--space-3);
-    border-radius: var(--radius-full);
-    border: 1px solid var(--color-border);
-    color: var(--color-text-secondary);
-    background: none;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    flex-shrink: 0;
-    white-space: nowrap;
-}
-.cat-pill.active, .cat-pill:hover {
-    background-color: var(--color-primary-tint);
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-}
-
-.cat-filter {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    max-width: 420px;
-    scrollbar-width: thin;
-    scrollbar-color: transparent transparent;
-}
-.cat-filter::-webkit-scrollbar {
-    height: 6px;
-}
-.cat-filter::-webkit-scrollbar-track {
-    background: transparent;
-}
-.cat-filter::-webkit-scrollbar-thumb {
-    background: transparent;
-    border-radius: 999px;
-}
-.cat-filter:hover {
-    scrollbar-color: var(--color-surface-overlay) transparent;
-}
-.cat-filter:hover::-webkit-scrollbar-thumb {
-    background: var(--color-surface-overlay);
-}
-
-
-
 /* DEVICE RESPONSIVENESS */
 @media (max-width: 768px) {
-    .header {
-        padding-left: calc(var(--space-6) + 48px); /* room for hamburger */
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: var(--space-3);
-        min-height: unset;
-        padding-bottom: var(--space-2);
-    }
-
-    .header-left h1 { font-size: var(--text-lg); }
-    .header-left p {
-        font-size: var(--text-xs);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
     .fab { bottom: var(--space-6); right: var(--space-6); }
+    #cat-filter-mount {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 }
 
 @media (max-width: 480px) {
     .table-header-bar { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
     .cat-filter { max-width: 100%; }
+    #cat-filter-mount {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
 }

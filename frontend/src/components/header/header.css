@@ -1,0 +1,102 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    right: 0;
+
+    height: 88px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-3);
+
+    padding: var(--space-4) var(--space-6) var(--space-3);
+    border-bottom: 1px solid var(--color-border-subtle);
+    background-color: var(--color-surface);
+
+    z-index: var(--z-header);
+    transition: left var(--transition-base);
+}
+
+body.sidebar-collapsed .header {
+    left: 64px;
+}
+
+.header-left {
+    min-width: 0; /* allows it to shrink so right slot isn't pushed off */
+    flex-shrink: 1;
+}
+
+.header-left h1 {
+    font-size: var(--text-2xl);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-left p {
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header-right {
+    flex-shrink: 0; /* search bar side never shrinks away entirely */
+    min-width: 0;
+}
+
+/* search bar inside header-right shrinks to fit */
+.header-right .search-box {
+    min-width: 0;
+}
+
+.header-right .search-box .search-input {
+    min-width: 80px; /* floor so it doesn't collapse to nothing */
+    width: 200px;
+}
+
+.page-content {
+    margin-top: 88px;
+}
+
+
+/* ======= MOBILE ======= */
+@media (max-width: 768px) {
+    .header {
+        left: 0;
+        height: auto;
+        min-height: 64px;
+
+        flex-direction: row;      /* keep one row */
+        flex-wrap: nowrap;        /* never wrap to two rows */
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-3) var(--space-4) var(--space-3) calc(var(--space-4) + 48px);
+    }
+
+    body.sidebar-collapsed .header {
+        left: 0;
+    }
+
+    .header-left h1 { font-size: var(--text-lg); }
+
+    .header-left p {
+        font-size: var(--text-xs);
+    }
+
+    /* search input shrinks on small screens */
+    .header-right .search-box .search-input {
+        width: 120px;
+    }
+
+    .page-content {
+        margin-top: 64px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-right .search-box .search-input {
+        width: 80px;
+    }
+}

@@ -7,6 +7,7 @@
     align-items: center;
     gap: var(--space-2);
     transition: border-color var(--transition-fast);
+    overflow: visible;
 }
 
 .search-box:focus-within {
@@ -17,21 +18,18 @@
 .search-box i {
     color: var(--color-text-muted);
     flex-shrink: 0;
-    /* keeps icon vertically centered with the input */
     display: flex;
     align-items: center;
 }
 
 .search-box .search-input {
     border: none;
-    padding: 0;
+    padding: 2px 0 2px 2px;
     width: 200px;
     background: transparent;
     color: var(--color-text-primary);
     font-family: var(--font-body);
     font-size: var(--text-sm);
-    /* cursor sits at the start of the line, not mid-height */
-    line-height: 1;
     caret-color: var(--color-primary);
 }
 

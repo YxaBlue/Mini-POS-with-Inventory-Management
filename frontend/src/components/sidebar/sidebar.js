@@ -8,36 +8,38 @@ export function renderSidebar(activePage = "inventory") {
     ];
 
     const nav = navItems.map(item => `
-            <a
-                href="../${item.id}/${item.id}.html"
-                class="nav-item ${item.id === activePage ? "active" : ""}"
-            >
-                <i class="ti ${item.icon}" aria-hidden="true"></i>
-                <span class="nav-label">${item.label}</span>
-            </a>
-        `).join("");
+        <a
+            href="../${item.id}/${item.id}.html"
+            class="nav-item ${item.id === activePage ? "active" : ""}"
+        >
+            <i class="ti ${item.icon}" aria-hidden="true"></i>
+            <span class="nav-label">${item.label}</span>
+        </a>
+    `).join("");
 
     return `
-        <button id="sidebar-hamburger" class="sidebar-hamburger" aria-label="Open menu">
-            <i class="ti ti-menu-2" aria-hidden="true"></i>
-        </button>
+        <div id="sidebar-root">
+            <button id="sidebar-hamburger" class="sidebar-hamburger" aria-label="Open menu">
+                <i class="ti ti-menu-2" aria-hidden="true"></i>
+            </button>
 
-        <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+            <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
 
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo" id="sidebar-logo">
-                <div class="logo-mark">
-                    <div class="logo-icon">
-                        <i class="ti ti-device-desktop-analytics" aria-hidden="true"></i>
-                    </div>
-                    <div class="logo-text-group">
-                        <div class="logo-text">MiniPOS</div>
-                        <div class="logo-sub">Point of Sale</div>
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-logo" id="sidebar-logo">
+                    <div class="logo-mark">
+                        <div class="logo-icon">
+                            <i class="ti ti-device-desktop-analytics" aria-hidden="true"></i>
+                        </div>
+                        <div class="logo-text-group">
+                            <div class="logo-text">MiniPOS</div>
+                            <div class="logo-sub">Point of Sale</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <nav class="nav">${nav}</nav>
-        </aside>
+                <nav class="nav">${nav}</nav>
+            </aside>
+        </div>
     `;
 }
 

@@ -11,34 +11,23 @@
     <link rel="stylesheet" href="../../components/modal/modal.css">
     <link rel="stylesheet" href="../../components/product-table/product-table.css">
     <link rel="stylesheet" href="../../components/search/search.css">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="stylesheet" href="../../components/subheader/subheader.css">
+    <link rel="stylesheet" href="../../components/cat-filter/cat-filter.css">
     <link rel="stylesheet" href="inventory.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
+
 <body>
     <div class="app-shell">
         <div id="sidebar-mount"></div>
 
         <div class="app-main">
-            <header class="header">
-                <div class="header-left">
-                    <h1>Inventory</h1>
-                    <p class="text-muted">Manage your product catalog</p>
-                </div>
-                <div class="header-right flex items-center gap-2">
-                    <!-- search component mounts here -->
-                    <div id="search-mount"></div>
-                </div>
-            </header>
+            <!-- PAGE HEADER -->
+            <div id="header-mount"></div>
+            <div id="subheader-mount"></div>
 
             <main class="page-content">
-                <div class="table-header-bar flex items-center justify-between">
-                    <div class="flex items-center gap-2">
-                        <h3>Products</h3>
-                        <span class="badge badge-neutral" id="row-count">0</span>
-                    </div>
-                    <div class="cat-filter flex gap-1" id="cat-filter"></div>
-                </div>
-
                 <div class="table-wrapper">
                     <table class="table">
                         <thead>

@@ -4,6 +4,9 @@ import { showToast } from "../../components/toast/toast.js";
 import { openModal, closeModal } from "../../components/modal/modal.js";
 import { renderProductTable } from "../../components/product-table/product-table.js";
 import { mountSearch } from "../../components/search/search.js";
+import { renderHeader } from "../../components/header/header.js";
+import { renderSubheader } from "../../components/subheader/subheader.js";
+import { mountCatFilter } from "../../components/cat-filter/cat-filter.js";
 
 let products = [];
 let editingId = null;
@@ -14,9 +17,20 @@ let selectedCategories = [];
 document.getElementById("sidebar-mount").outerHTML = renderSidebar("inventory");
 initSidebar();
 
+document.getElementById("header-mount").outerHTML = renderHeader({
+    title:       "Inventory",
+    subtitle:    "Manage your product catalog",
+    rightSlotId: "search-mount",
+});
+
 mountSearch("search-mount", {
     placeholder: "Search products…",
     onInput: () => renderTable(),
+});
+
+document.getElementById("subheader-mount").outerHTML = renderSubheader({
+    left:  `<h3>Total Products</h3><span class="badge badge-neutral" id="row-count">0</span>`,
+    right: `<div class="cat-filter flex gap-1" id="cat-filter-mount"></div>`,
 });
 
 const stockInput  = document.getElementById("f-stock");
@@ -63,21 +77,13 @@ function renderAll() {
 
 function renderCategoryFilter() {
     const categories = ["All", ...new Set(products.map(p => p.category).filter(Boolean))];
-    const container = document.getElementById("cat-filter");
-
-    container.innerHTML = categories
-        .map(cat => `
-            <button class="cat-pill ${cat === activeCategory ? "active" : ""}" data-category="${cat}">
-                ${cat}
-            </button>
-        `)
-        .join("");
-
-    container.querySelectorAll(".cat-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
-            activeCategory = btn.dataset.category;
+    mountCatFilter("cat-filter-mount", {
+        categories,
+        active: activeCategory,
+        onChange: (cat) => {
+            activeCategory = cat;
             renderAll();
-        });
+        },
     });
 }
 

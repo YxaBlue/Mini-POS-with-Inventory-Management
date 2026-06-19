@@ -1,20 +1,44 @@
-import { getProducts }                         from "../../api/productAPI.js";
-import { createSale }                           from "../../api/saleAPI.js";
-import { renderSidebar, initSidebar }           from "../../components/sidebar/sidebar.js";
-import { showToast }                            from "../../components/toast/toast.js";
-import { mountCart }                            from "../../components/cart/cart.js";
-import { renderProductGrid }                    from "../../components/product-card/product-card.js";
-import { showReceipt }                          from "../../components/receipt-modal/receipt-modal.js";
+import { getProducts }                from "../../api/productAPI.js";
+import { createSale }                 from "../../api/saleAPI.js";
+import { renderSidebar, initSidebar } from "../../components/sidebar/sidebar.js";
+import { showToast }                  from "../../components/toast/toast.js";
+import { mountCart }                  from "../../components/cart/cart.js";
+import { renderProductGrid }          from "../../components/product-card/product-card.js";
+import { showReceipt }                from "../../components/receipt-modal/receipt-modal.js";
+import { renderHeader }               from "../../components/header/header.js";
+import { mountSearch }                from "../../components/search/search.js";
+import { renderSubheader } from "../../components/subheader/subheader.js";
+import { mountCatFilter } from "../../components/cat-filter/cat-filter.js";
 
 // ── Sidebar ──────────────────────────────────────────────────────────────────
 
 document.getElementById("sidebar-mount").outerHTML = renderSidebar("pos");
 initSidebar();
 
+// ── Header ──────────────────────────────────────────────────────────────────
+
+document.getElementById("header-mount").outerHTML = renderHeader({
+    title:       "Point of Sale",
+    subtitle:    "Select products to add to cart",
+    rightSlotId: "search-mount",
+});
+
+document.getElementById("subheader-mount").outerHTML = renderSubheader({
+    right: `<div class="cat-filter flex gap-1" id="cat-filter-mount"></div>`,
+});
+
 // ── State ─────────────────────────────────────────────────────────────────────
 
 let products       = [];
 let activeCategory = "All";
+let searchQuery     = "";
+
+// ── Search mount ─────────────────────────────────────────────────────────────
+
+mountSearch("search-mount", {
+    placeholder: "Search products…",
+    onInput: (query) => { searchQuery = query; renderGrid(); },
+});
 
 // ── Cart mount ───────────────────────────────────────────────────────────────
 
@@ -36,15 +60,13 @@ async function loadProducts() {
 }
 
 function getFilteredProducts() {
-    const query = document.getElementById("pos-search").value.toLowerCase().trim();
-
     return products.filter(p => {
         const matchesCategory = activeCategory === "All" || p.category === activeCategory;
         const matchesQuery    =
-            !query ||
-            p.name.toLowerCase().includes(query) ||
-            (p.category  ?? "").toLowerCase().includes(query) ||
-            (p.description ?? "").toLowerCase().includes(query);
+            !searchQuery ||
+            p.name.toLowerCase().includes(searchQuery) ||
+            (p.category    ?? "").toLowerCase().includes(searchQuery) ||
+            (p.description ?? "").toLowerCase().includes(searchQuery);
         return matchesCategory && matchesQuery;
     });
 }
@@ -57,22 +79,14 @@ function renderAll() {
 }
 
 function renderCategories() {
-    const categories  = ["All", ...new Set(products.map(p => p.category).filter(Boolean))];
-    const container   = document.getElementById("cat-filter");
-
-    container.innerHTML = categories
-        .map(cat => `
-            <button class="cat-pill ${cat === activeCategory ? "active" : ""}" data-category="${cat}">
-                ${cat}
-            </button>
-        `)
-        .join("");
-
-    container.querySelectorAll(".cat-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
-            activeCategory = btn.dataset.category;
+    const categories = ["All", ...new Set(products.map(p => p.category).filter(Boolean))];
+    mountCatFilter("cat-filter-mount", {
+        categories,
+        active: activeCategory,
+        onChange: (cat) => {
+            activeCategory = cat;
             renderAll();
-        });
+        },
     });
 }
 
@@ -90,8 +104,6 @@ async function handleCheckout(cartItems) {
     try {
         const sale = await createSale(cartItems);
 
-        // The API returns { id, receipt_number, total_amount } but not item names.
-        // Enrich with names from local state for the receipt display.
         const enrichedSale = {
             ...sale,
             items: cartItems.map(ci => {
@@ -106,22 +118,16 @@ async function handleCheckout(cartItems) {
         };
 
         cart.clear();
-        await loadProducts(); // refresh stock quantities
+        await loadProducts();
 
-        showReceipt(enrichedSale, () => {
-            // onClose callback — nothing extra needed, cart is already cleared
-        });
+        showReceipt(enrichedSale, () => {});
 
     } catch (err) {
         console.error(err);
         showToast(err.message || "Checkout failed. Please try again.", "danger");
-        throw err; // rethrow so cart re-enables the checkout button
+        throw err;
     }
 }
-
-// ── Search ────────────────────────────────────────────────────────────────────
-
-document.getElementById("pos-search").addEventListener("input", renderGrid);
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 

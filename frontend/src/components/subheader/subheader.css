@@ -1,0 +1,125 @@
+.subheader {
+    position: fixed;
+    top: 88px;
+    left: var(--sidebar-width);
+    right: 0;
+
+    height: 50px;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    overflow: hidden;
+
+    padding: 0 var(--space-6);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border-subtle);
+    z-index: calc(var(--z-header) - 1);
+
+    transition: left var(--transition-base);
+}
+
+body.sidebar-collapsed .subheader {
+    left: 64px;
+}
+
+.subheader-left {
+    min-width: 0;
+    /* overflow: hidden; */
+    flex-shrink: 1;
+}
+
+.subheader-left h3,
+.subheader-left p,
+.subheader-left span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subheader-right {
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+/* push page content below both header + subheader */
+.page-content {
+    margin-top: calc(88px + 50px);
+}
+
+/* if only left slot is used, it fills the row */
+.subheader:not(:has(.subheader-right)) .subheader-left {
+    flex: 1;
+}
+
+/* if only right slot is used, center it */
+.subheader:not(:has(.subheader-left)) .subheader-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+/* cat filter pill row inside subheader */
+.subheader .cat-filter {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    max-width: unset;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+.subheader .cat-filter::-webkit-scrollbar        { height: 4px; }
+.subheader .cat-filter::-webkit-scrollbar-track  { background: transparent; }
+.subheader .cat-filter::-webkit-scrollbar-thumb  { background: transparent; border-radius: 999px; }
+.subheader .cat-filter:hover {
+    scrollbar-color: var(--color-surface-overlay) transparent;
+}
+.subheader .cat-filter:hover::-webkit-scrollbar-thumb {
+    background: var(--color-surface-overlay);
+}
+
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+    .subheader {
+        left: 0;
+        top: 64px;
+        height: auto;
+        min-height: 44px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        overflow: visible; /* don't clip children */
+    }
+
+    body.sidebar-collapsed .subheader {
+        left: 0;
+    }
+
+    .subheader-left {
+        padding-top: var(--space-2);
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        overflow: visible;
+    }
+
+    .subheader-right {
+        width: 100%;
+        overflow: visible; /* let the child handle its own scroll */
+    }
+
+    .subheader-right .cat-filter {
+        width: 100%;
+        overflow-x: scroll; /* force scroll context on the element itself */
+        -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+    }
+
+    .page-content {
+        margin-top: calc(64px + 44px);
+    }
+}

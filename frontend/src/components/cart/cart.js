@@ -1,20 +1,3 @@
-/**
- * cart component
- *
- * Self-contained cart panel. Manages its own state (items array).
- * Emits events outward via callbacks — does not talk to the API directly.
- *
- * Usage:
- *   import { mountCart } from "../../components/cart/cart.js";
- *
- *   const cart = mountCart("cart-mount", {
- *       onCheckout: async (cartItems) => { ... }  // receives [{ product_id, quantity, price, name }]
- *   });
- *
- *   cart.addItem(product);   // call from outside (e.g. product card click)
- *   cart.clear();            // call after successful sale
- */
-
 export function mountCart(mountId, { onCheckout } = {}) {
     const container = document.getElementById(mountId);
     if (!container) return;

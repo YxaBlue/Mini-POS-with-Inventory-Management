@@ -1,0 +1,1 @@
+window.location.replace("./src/pages/dashboard/dashboard.html");

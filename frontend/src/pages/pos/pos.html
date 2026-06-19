@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="../../components/product-card/product-card.css">
     <link rel="stylesheet" href="../../components/cart/cart.css">
     <link rel="stylesheet" href="../../components/receipt-modal/receipt-modal.css">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="stylesheet" href="../../components/search/search.css">
+    <link rel="stylesheet" href="../../components/subheader/subheader.css">
+    <link rel="stylesheet" href="../../components/cat-filter/cat-filter.css">
     <link rel="stylesheet" href="pos.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 </head>
@@ -20,36 +24,16 @@
         <div id="sidebar-mount"></div>
 
         <div class="app-main">
-            <!-- Page header -->
-            <header class="header">
-                <div class="header-left">
-                    <h1>Point of Sale</h1>
-                    <p class="text-muted">Select products to add to the cart</p>
-                </div>
-                <div class="header-right flex items-center gap-2">
-                    <div class="pos-search-wrap">
-                        <i class="ti ti-search pos-search-icon" aria-hidden="true"></i>
-                        <input
-                            type="text"
-                            id="pos-search"
-                            class="input pos-search-input"
-                            placeholder="Search products…"
-                            autocomplete="off"
-                        >
-                    </div>
-                </div>
-            </header>
+            <!-- PAGE HEADER -->
+            <div id="header-mount"></div>
+            <div id="subheader-mount"></div>
 
             <!-- POS body: product grid + cart -->
             <div class="pos-body">
 
                 <!-- Left: product grid -->
                 <section class="pos-products">
-                    <!-- Category filter -->
-                    <div class="pos-filter-bar flex items-center gap-2">
-                        <div class="cat-filter flex gap-1" id="cat-filter"></div>
-                    </div>
-
+                    
                     <!-- Product grid mount -->
                     <div id="product-grid-mount" class="pos-grid-wrap"></div>
                 </section>

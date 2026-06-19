@@ -14,9 +14,17 @@
 }
 
 .sidebar-logo {
-    padding: var(--space-5) var(--space-4);
+    height: 88px;
+    padding: 0 var(--space-4);
+    display: flex;
+    align-items: center;
     border-bottom: 1px solid var(--color-border-subtle);
     cursor: pointer;
+    flex-shrink: 0;
+}
+
+#sidebar-root {
+    display: contents;
 }
 
 .logo-mark { display: flex; align-items: center; gap: var(--space-2); overflow: hidden; }
@@ -64,7 +72,7 @@
 body.sidebar-collapsed .sidebar { width: 64px; }
 body.sidebar-collapsed .logo-text-group,
 body.sidebar-collapsed .nav-label { display: none; }
-body.sidebar-collapsed .sidebar-logo { display: flex; justify-content: center; }
+body.sidebar-collapsed .sidebar-logo { display: flex; justify-content: center;}
 body.sidebar-collapsed .nav-item { justify-content: center; }
 body.sidebar-collapsed .app-main { margin-left: 64px; }
 

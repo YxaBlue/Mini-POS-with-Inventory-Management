@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions · MiniPOS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="../../../styles/global-styles.css">
+    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../components/toast/toast.css">
+    <link rel="stylesheet" href="../../components/modal/modal.css">
+    <link rel="stylesheet" href="../../components/header/header.css">
+    <link rel="stylesheet" href="../../components/search/search.css">
+    <link rel="stylesheet" href="sales.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+
+<body>
+    <div class="app-shell">
+        <div id="sidebar-mount"></div>
+
+        <div class="app-main">
+            <!-- PAGE HEADER -->
+            <div id="header-mount"></div>
+
+            <main class="page-content">
+                <div class="sales-stats-row">
+                    <div class="card sales-stat-card">
+                        <span class="text-muted sales-stat-label">Total transactions</span>
+                        <span class="sales-stat-value font-mono" id="stat-count">0</span>
+                    </div>
+                    <div class="card sales-stat-card">
+                        <span class="text-muted sales-stat-label">Total revenue</span>
+                        <span class="sales-stat-value font-mono" id="stat-revenue">₱0.00</span>
+                    </div>
+                    <div class="card sales-stat-card">
+                        <span class="text-muted sales-stat-label">Today's sales</span>
+                        <span class="sales-stat-value font-mono" id="stat-today">₱0.00</span>
+                    </div>
+                </div>
+
+                <div class="table-header-bar flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <h3>Transaction history</h3>
+                        <span class="badge badge-neutral" id="row-count">0</span>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Receipt Number</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Items</th>
+                                <th>Total Amount</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-tbody"></tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- TRANSACTION DETAILS MODAL -->
+    <div id="details-modal" class="modal-overlay">
+        <div class="modal card" style="max-width:420px; padding:0;">
+            <div id="details-modal-content"></div>
+        </div>
+    </div>
+
+    <script type="module" src="sales.js"></script>
+</body>
+</html>

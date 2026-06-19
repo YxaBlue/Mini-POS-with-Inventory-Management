@@ -1,7 +1,7 @@
 function stockBadge(qty) {
-    if (qty === 0) return `<span class="badge badge-danger">Out of stock</span>`;
-    if (qty <= 5) return `<span class="badge badge-warning">Low stock</span>`;
-    return `<span class="badge badge-success">In stock</span>`;
+    if (qty === 0) return `<span class="badge badge-danger">OUT</span>`;
+    if (qty <= 5) return `<span class="badge badge-warning">LOW</span>`;
+    return `<span class="badge badge-success">AVAILABLE</span>`;
 }
 
 function renderRow(product) {
