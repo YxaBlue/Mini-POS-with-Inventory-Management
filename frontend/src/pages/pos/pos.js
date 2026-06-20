@@ -27,6 +27,9 @@ document.getElementById("subheader-mount").outerHTML = renderSubheader({
     right: `<div class="cat-filter flex gap-1" id="cat-filter-mount"></div>`,
 });
 
+syncPageOffset();
+window.addEventListener("resize", syncPageOffset);
+
 // ── State ─────────────────────────────────────────────────────────────────────
 
 let products       = [];
@@ -39,6 +42,14 @@ mountSearch("search-mount", {
     placeholder: "Search products…",
     onInput: (query) => { searchQuery = query; renderGrid(); },
 });
+
+function syncPageOffset() {
+    const header    = document.querySelector(".header");
+    const subheader = document.querySelector(".subheader");
+
+    const totalHeight = (header?.offsetHeight ?? 0) + (subheader?.offsetHeight ?? 0);
+    document.documentElement.style.setProperty("--page-offset", `${totalHeight}px`);
+}
 
 // ── Cart mount ───────────────────────────────────────────────────────────────
 

@@ -1,7 +1,7 @@
 /* ===== PRODUCT GRID ===== */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: var(--space-3);
 }
 
@@ -44,7 +44,7 @@
         background-color var(--transition-fast),
         transform var(--transition-fast),
         box-shadow var(--transition-fast);
-    min-height: 140px;
+    height: 160px;   /* was: min-height: 140px — now fixed, width stays flexible via the grid */
     overflow: hidden;
 }
 
@@ -81,6 +81,7 @@
     flex-direction: column;
     gap: var(--space-1);
     flex: 1;
+    min-height: 0;
 }
 
 .product-card-category {
@@ -92,11 +93,10 @@
 }
 
 .product-card-name {
-    font-size: var(--text-sm);
+    font-size: var(--text-s);
     font-weight: 600;
     color: var(--color-text-primary);
     line-height: var(--leading-tight);
-    /* clamp to 2 lines */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -118,17 +118,24 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;   /* was: wrap — prevents the 2nd row */
+    overflow: hidden;    /* added — clips instead of wrapping if space ever runs out */
     margin-top: var(--space-1);
 }
 
 .product-card-price {
+    flex-shrink: 0;      /* added — price text always stays whole */
     font-size: var(--text-base);
     font-weight: 700;
     color: var(--color-text-primary);
 }
 
 .product-card-stock {
+    display: inline-flex;
+    min-width: 0;        /* added — lets badge shrink/ellipsis instead of forcing a wrap */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 10px;
 }
 
@@ -157,7 +164,11 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
     .product-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
         gap: var(--space-2);
+    }
+
+    .product-card {
+        height: 150px;
     }
 }

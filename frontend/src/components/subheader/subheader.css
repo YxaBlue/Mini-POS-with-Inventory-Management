@@ -1,3 +1,7 @@
+.page-content {
+    margin-top: var(--page-offset, 138px);
+}
+
 .subheader {
     position: fixed;
     top: 88px;
@@ -17,7 +21,7 @@
     padding: 0 var(--space-6);
     background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-border-subtle);
-    z-index: calc(var(--z-header) - 1);
+    z-index: var(--z-subheader);
 
     transition: left var(--transition-base);
 }
@@ -28,7 +32,6 @@ body.sidebar-collapsed .subheader {
 
 .subheader-left {
     min-width: 0;
-    /* overflow: hidden; */
     flex-shrink: 1;
 }
 
@@ -45,17 +48,12 @@ body.sidebar-collapsed .subheader {
     flex-shrink: 1;
 }
 
-/* push page content below both header + subheader */
-.page-content {
-    margin-top: calc(88px + 50px);
-}
-
-/* if only left slot is used, it fills the row */
+/* LEFT SLOT ONLY USED */
 .subheader:not(:has(.subheader-right)) .subheader-left {
     flex: 1;
 }
 
-/* if only right slot is used, center it */
+/* RIGHT SLOT ONLY USED */
 .subheader:not(:has(.subheader-left)) .subheader-right {
     flex: 1;
     display: flex;
@@ -117,9 +115,5 @@ body.sidebar-collapsed .subheader {
         width: 100%;
         overflow-x: scroll; /* force scroll context on the element itself */
         -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
-    }
-
-    .page-content {
-        margin-top: calc(64px + 44px);
     }
 }

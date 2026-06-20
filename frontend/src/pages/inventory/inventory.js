@@ -29,14 +29,30 @@ mountSearch("search-mount", {
 });
 
 document.getElementById("subheader-mount").outerHTML = renderSubheader({
-    left:  `<h3>Total Products</h3><span class="badge badge-neutral" id="row-count">0</span>`,
+    left: `
+        <h3>Total Products</h3>
+        <span class="badge badge-neutral" id="row-count">0</span>
+        <button class="btn btn-primary btn-sm" id="add-product-btn" aria-label="Add product">
+            <i class="ti ti-plus" aria-hidden="true"></i>
+        </button>
+    `,
     right: `<div class="cat-filter flex gap-1" id="cat-filter-mount"></div>`,
 });
+
+syncPageOffset();
 
 const stockInput  = document.getElementById("f-stock");
 const nameInput   = document.getElementById("f-name");
 const descInput   = document.getElementById("f-description");
 const priceInput  = document.getElementById("f-price");
+
+function syncPageOffset() {
+    const header    = document.querySelector(".header");
+    const subheader = document.querySelector(".subheader");
+
+    const totalHeight = (header?.offsetHeight ?? 0) + (subheader?.offsetHeight ?? 0);
+    document.documentElement.style.setProperty("--page-offset", `${totalHeight}px`);
+}
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -253,7 +269,7 @@ async function handleConfirmDelete() {
 }
 
 // ─── Event listeners ──────────────────────────────────────────────────────────
-
+window.addEventListener("resize", syncPageOffset);
 document.getElementById("add-product-btn").addEventListener("click", openAddModal);
 document.getElementById("cancel-form-btn").addEventListener("click", () => closeModal("form-modal"));
 document.getElementById("modal-close-btn").addEventListener("click", () => closeModal("form-modal"));

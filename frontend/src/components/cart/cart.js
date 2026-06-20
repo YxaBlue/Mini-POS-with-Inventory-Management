@@ -170,10 +170,18 @@ function cartItemTemplate(item) {
 
     return `
         <div class="cart-item">
-            <div class="cart-item-info">
+            <div class="cart-item-top">
                 <p class="cart-item-name">${item.name}</p>
-                <span class="cart-item-unit font-mono">₱${parseFloat(item.price).toFixed(2)} each</span>
+                <button
+                    class="cart-remove-btn"
+                    data-id="${item.id}"
+                    aria-label="Remove ${item.name}"
+                >
+                    <i class="ti ti-x" aria-hidden="true"></i>
+                </button>
             </div>
+
+            <span class="cart-item-unit font-mono">Unit price: ₱${parseFloat(item.price).toFixed(2)}</span>
 
             <div class="cart-item-controls">
                 <div class="cart-qty-control">
@@ -200,14 +208,6 @@ function cartItemTemplate(item) {
                 </div>
 
                 <span class="cart-item-subtotal font-mono">₱${subtotal.toFixed(2)}</span>
-
-                <button
-                    class="cart-remove-btn btn-ghost btn-icon"
-                    data-id="${item.id}"
-                    aria-label="Remove ${item.name}"
-                >
-                    <i class="ti ti-x" aria-hidden="true"></i>
-                </button>
             </div>
         </div>
     `;

@@ -81,14 +81,15 @@
     background-color: var(--color-surface-raised);
 }
 
-.cart-item-info {
+.cart-item-top {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
 }
 
 .cart-item-name {
-    font-size: var(--text-sm);
+    font-size: var(--text-s);
     font-weight: 600;
     color: var(--color-text-primary);
     line-height: var(--leading-tight);
@@ -110,8 +111,6 @@
     font-size: var(--text-sm);
     font-weight: 700;
     color: var(--color-text-primary);
-    min-width: 70px;
-    text-align: right;
 }
 
 

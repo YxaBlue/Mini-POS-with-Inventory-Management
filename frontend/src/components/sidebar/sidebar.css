@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     transition: width var(--transition-base), transform var(--transition-base);
-    z-index: var(--z-header);
+    z-index: var(--z-sidebar);
 }
 
 .sidebar-logo {
@@ -103,7 +103,7 @@ body.sidebar-collapsed .app-main { margin-left: 64px; }
         border-radius: var(--radius-md);
         align-items: center;
         justify-content: center;
-        z-index: var(--z-header);
+        z-index: var(--z-hamburger); 
         color: var(--color-text-primary);
     }
     .sidebar-hamburger i { font-size: 20px; }
@@ -113,7 +113,7 @@ body.sidebar-collapsed .app-main { margin-left: 64px; }
         position: fixed;
         inset: 0;
         background: rgba(14, 11, 26, 0.6);
-        z-index: calc(var(--z-header) - 1);
+        z-index: var(--z-sidebar-backdrop);
     }
 
     .app-main { margin-left: 0 !important; }

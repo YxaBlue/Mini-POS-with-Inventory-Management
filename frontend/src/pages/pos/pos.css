@@ -23,15 +23,22 @@
 .pos-body {
     display: grid;
     grid-template-columns: 1fr 320px;
-    flex: 1;
     overflow: hidden;
-    height: calc(100vh - 88px);
+    height: calc(100vh - var(--page-offset, 88px));
+    position: fixed;
+    top: var(--page-offset, 88px);
+    left: var(--sidebar-width);
+    right: 0;
+    transition: left var(--transition-base);
+}
+
+body.sidebar-collapsed .pos-body {
+    left: 64px;
 }
 
 
 /* ===== LEFT: PRODUCTS ===== */
 .pos-products {
-    padding-top: 130px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -68,23 +75,24 @@
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .pos-body {
+        left: 0;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
-        height: auto;
+        grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+        height: calc(100vh - var(--page-offset, 138px)); /* was: height: auto */
     }
 
     .pos-products {
-        padding-top: 103px;
         min-height: 0;
-        max-height: 55vh;
+        max-height: none; /* remove — grid row now controls height */
     }
 
     .pos-cart {
-        max-height: 45vh;
+        min-height: 0;
         border-left: none;
         border-top: 1px solid var(--color-border-subtle);
+        /* remove the old height: 45vh — grid row controls it now */
     }
 
     .pos-grid-wrap {
@@ -103,12 +111,6 @@
 
 @media (max-width: 600px) {
     .pos-search-input { width: 140px; }
-
-    .pos-products {
-        padding-top: 110px;
-        min-height: 0;
-        max-height: 60vh;
-    }
 
     .pos-grid-wrap {
         padding: var(--space-5) var(--space-3);

@@ -4,7 +4,6 @@ export function renderSidebar(activePage = "inventory") {
         { id: "inventory", label: "Inventory", icon: "ti-package"          },
         { id: "pos",       label: "POS",       icon: "ti-shopping-cart"    },
         { id: "sales",     label: "Sales",     icon: "ti-receipt"          },
-        { id: "settings",  label: "Settings",  icon: "ti-settings"         }
     ];
 
     const nav = navItems.map(item => `
