@@ -1,0 +1,53 @@
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 11, 26, 0.75);
+    z-index: var(--z-modal);
+    align-items: center;
+    justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+
+.modal {
+    width: 380px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+.modal-header {
+    margin-bottom: var(--space-4);
+}
+.modal-footer {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border-subtle);
+}
+
+.modal .field {
+    margin-bottom: var(--space-4); /* gap between each field block */
+}
+
+.modal .field-label {
+    margin-bottom: var(--space-2); /* gap between label and its input */
+}
+
+.modal textarea.input {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.delete-icon {
+    width: 48px;
+    height: 48px;
+    background-color: var(--color-danger-tint);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--space-3);
+}
+.delete-icon i { font-size: 22px; color: var(--color-danger); }
+
+@media (max-width: 768px) {
+    .modal { width: 90vw; max-width: 380px; }
+}

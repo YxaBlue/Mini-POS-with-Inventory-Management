@@ -1,14 +1,14 @@
 import { getProducts }                from "../../api/productAPI.js";
 import { createSale }                 from "../../api/saleAPI.js";
-import { renderSidebar, initSidebar } from "../../components/sidebar/sidebar.js";
-import { showToast }                  from "../../components/toast/toast.js";
-import { mountCart }                  from "../../components/cart/cart.js";
-import { renderProductGrid }          from "../../components/product-card/product-card.js";
-import { showReceipt }                from "../../components/receipt-modal/receipt-modal.js";
-import { renderHeader }               from "../../components/header/header.js";
-import { mountSearch }                from "../../components/search/search.js";
-import { renderSubheader } from "../../components/subheader/subheader.js";
-import { mountCatFilter } from "../../components/cat-filter/cat-filter.js";
+import { renderSidebar, initSidebar } from "../../components/navigation/sidebar/sidebar.js";
+import { showToast }                  from "../../components/output/toast/toast.js";
+import { mountCart }                  from "../../components/input/cart/cart.js";
+import { renderProductGrid }          from "../../components/input/product-card/product-card.js";
+import { showReceipt }                from "../../components/modals/receipt-modal/receipt-modal.js";
+import { renderHeader }               from "../../components/headers/header/header.js";
+import { mountSearch }                from "../../components/input/search/search.js";
+import { renderSubheader }            from "../../components/headers/subheader/subheader.js";
+import { mountCatFilter }             from "../../components/output/cat-filter/cat-filter.js";
 
 // ── Sidebar ──────────────────────────────────────────────────────────────────
 
@@ -131,6 +131,7 @@ async function handleCheckout(cartItems) {
         cart.clear();
         await loadProducts();
 
+        showToast("Sale completed successfully.", "success");
         showReceipt(enrichedSale, () => {});
 
     } catch (err) {

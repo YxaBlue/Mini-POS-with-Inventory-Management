@@ -19,37 +19,18 @@
 }
 
 
-/* ===== STATS ROW ===== */
-.sales-stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: var(--space-4);
-    margin-bottom: var(--space-5);
-}
-
-.sales-stat-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-}
-
-.sales-stat-label {
-    font-size: var(--text-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 600;
-}
-
-.sales-stat-value {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-text-primary);
-}
-
 
 /* ===== TABLE HEADER BAR ===== */
 .table-header-bar { margin-bottom: var(--space-3); }
 
+
+/* ===== COLUMN WIDTHS (mirrors product-table's approach) ===== */
+.table th:nth-child(1), .table td:nth-child(1) { width: 220px; }  /* Receipt Number */
+.table th:nth-child(2), .table td:nth-child(2) { width: 120px; }  /* Date */
+.table th:nth-child(3), .table td:nth-child(3) { width: 100px; }  /* Time */
+.table th:nth-child(4), .table td:nth-child(4) { width: 90px; }   /* Items */
+.table th:nth-child(5), .table td:nth-child(5) { width: 130px; }  /* Total Amount */
+.table th:nth-child(6), .table td:nth-child(6) { width: 110px; }   /* View button */
 
 /* ===== RECEIPT NUMBER CELL ===== */
 .receipt-number-cell {
@@ -248,31 +229,4 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .sales-search-input { width: 160px; }
-}
-
-@media (max-width: 600px) {
-    .table thead { display: none; }
-    .table, .table tbody, .table tr, .table td {
-        display: block;
-        width: 100%;
-    }
-    .table tbody tr {
-        margin-bottom: var(--space-3);
-        border: 1px solid var(--color-border-subtle);
-        border-radius: var(--radius-md);
-        padding: var(--space-2) 0;
-    }
-    .table td {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: none;
-        padding: var(--space-2) var(--space-4);
-    }
-    .table td::before {
-        content: attr(data-label);
-        font-size: var(--text-xs);
-        font-weight: 600;
-        color: var(--color-text-muted);
-        text-transform: uppercase;
-    }
 }

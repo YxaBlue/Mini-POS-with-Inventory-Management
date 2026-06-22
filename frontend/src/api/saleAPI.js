@@ -20,8 +20,12 @@ export async function createSale(items) {
     });
 
     if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message || "Failed to create sale");
+        let reason = `Checkout failed (${response.status})`;
+        try {
+            const body = await response.json();
+            if (body.message) reason = body.message;
+        } catch {}
+        throw new Error(reason);
     }
 
     return response.json();

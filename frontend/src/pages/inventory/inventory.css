@@ -1,11 +1,56 @@
 #cat-filter-mount {
     flex-shrink: 0;
-    width: 500px; /* desktop fixed width */
+    width: 500px;
     overflow-x: auto;
 }
 
 /* ===== TABLE HEADER BAR ===== */
 .table-header-bar { margin-bottom: var(--space-3); }
+
+/* ===== PRODUCT TABLE CELLS (merged from product-table.css) ===== */
+.td-id {
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+}
+.td-name {
+    font-weight: 600;
+}
+.td-desc {
+    color: var(--color-text-secondary);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.td-price { font-family: var(--font-mono); font-weight: 600; }
+.td-stock { font-family: var(--font-mono); }
+
+.row-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+.table tbody tr:hover .row-actions { opacity: 1; }
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-12);
+    color: var(--color-text-muted);
+}
+.empty-state i { font-size: 28px; display: block; margin: 0 auto var(--space-2); }
+
+/* Inventory's own column widths (table-layout: fixed comes from scrollable-table.css) */
+.table th:nth-child(1), .table td:nth-child(1) { width: 70px; }   /* ID */
+.table th:nth-child(2), .table td:nth-child(2) { width: 180px; }  /* Name */
+.table th:nth-child(3), .table td:nth-child(3) { width: 130px; }  /* Category */
+.table th:nth-child(4), .table td:nth-child(4) { width: 220px; }  /* Description */
+.table th:nth-child(5), .table td:nth-child(5) { width: 100px; }  /* Price */
+.table th:nth-child(6), .table td:nth-child(6) { width: 90px; }   /* Stock */
+.table th:nth-child(7), .table td:nth-child(7) { width: 140px; }  /* Status */
+.table th:nth-child(8), .table td:nth-child(8) { width: 90px; }   /* Actions */
 
 /* DEVICE RESPONSIVENESS */
 @media (max-width: 768px) {
@@ -14,6 +59,10 @@
         max-width: 100%;
         overflow-x: scroll;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .row-actions {
+        opacity: 1;
     }
 }
 

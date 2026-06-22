@@ -13,6 +13,7 @@
  * it with the full .search-box markup. The onInput callback receives the
  * current trimmed lowercase query string.
  */
+
 export function mountSearch(mountId, { placeholder = "Search…", onInput } = {}) {
     const mount = document.getElementById(mountId);
     if (!mount) return;

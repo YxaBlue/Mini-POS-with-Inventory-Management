@@ -1,0 +1,52 @@
+/**
+ * scrollable-table component
+ *
+ * Wraps any <table class="table"> inside a <div class="table-wrapper"> to make
+ * it scroll both horizontally and vertically once content overflows, while
+ * keeping the column header row pinned in place.
+ *
+ * Usage:
+ *   <div class="table-wrapper">
+ *       <table class="table">
+ *           <thead><tr><th>...</th></tr></thead>
+ *           <tbody>...</tbody>
+ *       </table>
+ *   </div>
+ *
+ * Column widths: add data-col-widths to the <table> as a comma-separated list,
+ * or just rely on the browser's natural sizing — fixed widths are optional and
+ * set per-page since column counts/content differ between tables.
+ */
+
+.table-wrapper {
+    max-height: calc(100vh - var(--page-offset, 138px) - var(--space-12));
+    overflow: auto;
+}
+
+.table {
+    width: 100%;
+    table-layout: fixed; /* widths become exact and authoritative, not suggestions */
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table td,
+.table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--color-surface-raised);
+}
+
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        font-size: var(--text-xs);
+    }
+}

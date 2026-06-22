@@ -60,6 +60,7 @@
  
 
     /* SPACING */
+    --space-0:  2px;
     --space-1:  4px;
     --space-2:  8px;
     --space-3:  12px;
@@ -96,14 +97,14 @@
     
 
     /* Z INDEX SCALE */
-    --z-dropdown:        100;
-    --z-header:          200;
-    --z-subheader:       190;  /* just below header */
-    --z-hamburger:        210;  /* above header, below sidebar */
-    --z-sidebar:          220;  /* highest of the layout layers */
-    --z-sidebar-backdrop: 215;  /* between hamburger and sidebar, so it dims everything but doesn't block the sidebar */
-    --z-modal:           300;
-    --z-toast:           400;
+    --z-dropdown:         100;
+    --z-header:           200;
+    --z-subheader:        190;
+    --z-hamburger:        210;
+    --z-sidebar:          220;
+    --z-sidebar-backdrop: 215;
+    --z-modal:            300;
+    --z-toast:            400;
 }
 
 
@@ -358,7 +359,6 @@ p { color: var(--color-text-secondary); }
 
 
 /* =================== TABLE BASE ==================== */
-/* Component-specific tables (e.g. inventory table) can extend this. */
 .table-wrapper {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border-subtle);
@@ -377,7 +377,7 @@ p { color: var(--color-text-secondary); }
     padding: var(--space-3) var(--space-4);
     border-bottom: 1px solid var(--color-border);
 }
- 
+
 .table td {
     padding: var(--space-3) var(--space-4);
     font-size: var(--text-sm);

@@ -1,9 +1,10 @@
 import { getSales }                   from "../../api/saleAPI.js";
-import { renderSidebar, initSidebar } from "../../components/sidebar/sidebar.js";
-import { showToast }                  from "../../components/toast/toast.js";
-import { openModal, closeModal }      from "../../components/modal/modal.js";
-import { renderHeader }               from "../../components/header/header.js";
-import { mountSearch }                from "../../components/search/search.js";
+import { renderSidebar, initSidebar } from "../../components/navigation/sidebar/sidebar.js";
+import { showToast }                  from "../../components/output/toast/toast.js";
+import { openModal, closeModal }      from "../../components/modals/modal/modal.js";
+import { renderHeader }               from "../../components/headers/header/header.js";
+import { mountSearch }                from "../../components/input/search/search.js";
+import { mountStatGrid }              from "../../components/output/stat-card/stat-card.js";
 
 // ── Sidebar ──────────────────────────────────────────────────────────────────
 document.getElementById("sidebar-mount").outerHTML = renderSidebar("sales");
@@ -60,9 +61,11 @@ function renderStats() {
         .filter(s => new Date(s.transaction_date).toDateString() === todayStr)
         .reduce((sum, s) => sum + parseFloat(s.total_amount), 0);
 
-    document.getElementById("stat-count").textContent   = totalCount;
-    document.getElementById("stat-revenue").textContent  = `₱${totalRevenue.toFixed(2)}`;
-    document.getElementById("stat-today").textContent    = `₱${todayRevenue.toFixed(2)}`;
+    mountStatGrid("stats-mount", [
+        { id: "stat-count",   label: "Total transactions", value: totalCount },
+        { id: "stat-revenue", label: "Total revenue",      value: `₱${totalRevenue.toFixed(2)}` },
+        { id: "stat-today",   label: "Today's sales",      value: `₱${todayRevenue.toFixed(2)}` },
+    ]);
 }
 
 function renderTable() {

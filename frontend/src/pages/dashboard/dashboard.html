@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard · MiniPOS</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
-    <link rel="stylesheet" href="../../../styles/global-styles.css">
-    <link rel="stylesheet" href="../../components/sidebar/sidebar.css">
-    <link rel="stylesheet" href="../../components/header/header.css">
-    <link rel="stylesheet" href="../../components/toast/toast.css">
-    <link rel="stylesheet" href="../../components/cat-filter/cat-filter.css">
-    <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="../../../styles/global-styles.css">
+    <link rel="stylesheet" href="../../components/navigation/sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../components/headers/header/header.css">
+    <link rel="stylesheet" href="../../components/modals/modal/modal.css">
+
+    <link rel="stylesheet" href="../../components/output/toast/toast.css">
+    <link rel="stylesheet" href="../../components/output/cat-filter/cat-filter.css">
+    <link rel="stylesheet" href="../../components/output/stat-card/stat-card.css">
+    <link rel="stylesheet" href="../../components/output/widget/widget.css">
+    <link rel="stylesheet" href="../../components/output/scrollable-table/scrollable-table.css">
 </head>
 <body>
     <div class="app-shell">
@@ -22,116 +28,22 @@
 
             <main class="page-content">
 
-                <!-- STAT CARDS ROW -->
-                <div class="dash-stats-row">
-                    <div class="card dash-stat-card">
-                        <div class="dash-stat-icon dash-stat-icon--primary">
-                            <i class="ti ti-package" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <div class="dash-stat-label">Total products</div>
-                            <div class="dash-stat-value font-mono" id="stat-total-products">—</div>
-                        </div>
-                    </div>
-
-                    <div class="card dash-stat-card">
-                        <div class="dash-stat-icon dash-stat-icon--success">
-                            <i class="ti ti-receipt" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <div class="dash-stat-label">Transactions today</div>
-                            <div class="dash-stat-value font-mono" id="stat-tx-today">—</div>
-                        </div>
-                    </div>
-
-                    <div class="card dash-stat-card">
-                        <div class="dash-stat-icon dash-stat-icon--info">
-                            <i class="ti ti-receipt-2" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <div class="dash-stat-label">Total transactions</div>
-                            <div class="dash-stat-value font-mono" id="stat-tx-total">—</div>
-                        </div>
-                    </div>
-
-                    <div class="card dash-stat-card">
-                        <div class="dash-stat-icon dash-stat-icon--warning">
-                            <i class="ti ti-cash" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <div class="dash-stat-label">Revenue today</div>
-                            <div class="dash-stat-value font-mono" id="stat-rev-today">—</div>
-                        </div>
-                    </div>
-
-                    <div class="card dash-stat-card">
-                        <div class="dash-stat-icon dash-stat-icon--success">
-                            <i class="ti ti-coins" aria-hidden="true"></i>
-                        </div>
-                        <div>
-                            <div class="dash-stat-label">Total revenue</div>
-                            <div class="dash-stat-value font-mono" id="stat-rev-total">—</div>
-                        </div>
-                    </div>
-                </div>
+                <!-- STAT CARDS -->
+                <div id="stats-mount"></div>
 
                 <!-- MAIN TWO-COLUMN GRID -->
                 <div class="dash-grid">
-
-                    <!-- LEFT: STOCK TABLE -->
-                    <div class="dash-widget">
-                        <div class="dash-widget-header">
-                            <div class="flex items-center gap-2">
-                                <h3>Current stock</h3>
-                                <span class="badge badge-neutral" id="stock-count">0</span>
-                            </div>
-                            <div id="stock-cat-filter" class="dash-cat-filter flex gap-1"></div>
-                        </div>
-
-                        <div class="table-wrapper">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Product</th>
-                                        <th>Stock</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="stock-tbody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- RIGHT: RECENT TRANSACTIONS -->
-                    <div class="dash-widget">
-                        <a href="../sales/sales.html" class="dash-widget-header dash-widget-header--link">
-                            <div class="flex items-center gap-2">
-                                <h3>Recent transactions</h3>
-                                <span class="badge badge-neutral" id="recent-count">0</span>
-                            </div>
-                            <span class="dash-view-all">
-                                View all <i class="ti ti-arrow-right" aria-hidden="true"></i>
-                            </span>
-                        </a>
-
-                        <div class="table-wrapper">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Receipt</th>
-                                        <th>Date</th>
-                                        <th>Items</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recent-tbody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-
+                    <div id="stock-widget-mount"></div>
+                    <div id="recent-widget-mount"></div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <!-- TRANSACTION DETAILS MODAL -->
+    <div id="details-modal" class="modal-overlay">
+        <div class="modal card" style="max-width:420px; padding:0;">
+            <div id="details-modal-content"></div>
         </div>
     </div>
 

@@ -88,8 +88,7 @@ function receiptTemplate(sale) {
             </div>
 
             <button class="btn btn-primary receipt-new-btn" id="receipt-new-btn">
-                <i class="ti ti-plus" aria-hidden="true"></i>
-                New sale
+                DONE
             </button>
         </div>
     `;

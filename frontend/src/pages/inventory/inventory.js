@@ -1,18 +1,14 @@
-import { getProducts, addProduct, updateProduct, deleteProduct } from "../../api/productAPI.js";
-import { renderSidebar, initSidebar } from "../../components/sidebar/sidebar.js";
-import { showToast } from "../../components/toast/toast.js";
-import { openModal, closeModal } from "../../components/modal/modal.js";
-import { renderProductTable } from "../../components/product-table/product-table.js";
-import { mountSearch } from "../../components/search/search.js";
-import { renderHeader } from "../../components/header/header.js";
-import { renderSubheader } from "../../components/subheader/subheader.js";
-import { mountCatFilter } from "../../components/cat-filter/cat-filter.js";
+import { getProducts, addProduct, updateProduct, deleteProduct }    from "../../api/productAPI.js";
+import { renderSidebar, initSidebar }                               from "../../components/navigation/sidebar/sidebar.js";
+import { showToast }                                                from "../../components/output/toast/toast.js";
+import { mountSearch }                                              from "../../components/input/search/search.js";
+import { renderHeader }                                             from "../../components/headers/header/header.js";
+import { renderSubheader }                                          from "../../components/headers/subheader/subheader.js";
+import { mountCatFilter }                                           from "../../components/output/cat-filter/cat-filter.js";
+import { mountProductModals }                                       from "../../components/modals/product-modals/product-modals.js";
 
 let products = [];
-let editingId = null;
-let deletingId = null;
 let activeCategory = "All";
-let selectedCategories = [];
 
 document.getElementById("sidebar-mount").outerHTML = renderSidebar("inventory");
 initSidebar();
@@ -41,10 +37,13 @@ document.getElementById("subheader-mount").outerHTML = renderSubheader({
 
 syncPageOffset();
 
-const stockInput  = document.getElementById("f-stock");
-const nameInput   = document.getElementById("f-name");
-const descInput   = document.getElementById("f-description");
-const priceInput  = document.getElementById("f-price");
+// ─── Modals ───────────────────────────────────────────────────────────────────
+
+const productModals = mountProductModals("modals-mount", {
+    getExistingCategories,
+    onSubmit:  handleFormSubmit,
+    onDelete:  handleConfirmDelete,
+});
 
 function syncPageOffset() {
     const header    = document.querySelector(".header");
@@ -84,7 +83,7 @@ function getExistingCategories() {
     return [...new Set(products.map(p => p.category).filter(Boolean))];
 }
 
-// ─── Render ───────────────────────────────────────────────────────────────────
+// ─── Render: filters ──────────────────────────────────────────────────────────
 
 function renderAll() {
     renderCategoryFilter();
@@ -103,136 +102,78 @@ function renderCategoryFilter() {
     });
 }
 
+// ─── Render: product table ─────────────────────────────────────────────────────
+
+function stockBadge(qty) {
+    if (qty === 0) return `<span class="badge badge-danger">NO STOCK</span>`;
+    if (qty <= 5) return `<span class="badge badge-warning">LOW STOCK</span>`;
+    return `<span class="badge badge-success">AVAILABLE</span>`;
+}
+
+function renderProductRow(product) {
+    return `
+        <tr>
+            <td class="td-id">#${product.id}</td>
+            <td class="td-name">${product.name}</td>
+            <td>${product.category ?? "General"}</td>
+            <td class="td-desc">${product.description ?? "—"}</td>
+            <td class="td-price">₱${Number(product.price).toFixed(2)}</td>
+            <td class="td-stock">${product.stock_quantity}</td>
+            <td>${stockBadge(product.stock_quantity)}</td>
+            <td>
+                <div class="row-actions">
+                    <button class="btn-icon btn-ghost edit-btn" data-id="${product.id}" aria-label="Edit ${product.name}">
+                        <i class="ti ti-pencil" aria-hidden="true"></i>
+                    </button>
+                    <button class="btn-icon btn-ghost delete-btn" data-id="${product.id}" aria-label="Archive ${product.name}">
+                        <i class="ti ti-trash" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `;
+}
+
+function renderEmptyState() {
+    return `
+        <tr>
+            <td colspan="8">
+                <div class="empty-state">
+                    <i class="ti ti-package-off" aria-hidden="true"></i>
+                    No products found
+                </div>
+            </td>
+        </tr>
+    `;
+}
+
 function renderTable() {
     const filtered = getFilteredProducts();
     document.getElementById("row-count").textContent = filtered.length;
 
-    renderProductTable("product-tbody", filtered, {
-        onEdit: openEditModal,
-        onDelete: openDeleteModal,
-    });
-}
+    const tbody = document.getElementById("product-tbody");
+    if (!tbody) return;
 
-// ─── Category tag UI ──────────────────────────────────────────────────────────
+    tbody.innerHTML = filtered.length === 0
+        ? renderEmptyState()
+        : filtered.map(renderProductRow).join("");
 
-function renderCategoryUI(selected = []) {
-    selectedCategories = selected;
-
-    const tagsContainer        = document.getElementById("category-tags");
-    const suggestionsContainer = document.getElementById("category-suggestions");
-    const input                = document.getElementById("f-category-input");
-
-    // selected tags
-    tagsContainer.innerHTML = selectedCategories.map(cat => `
-        <span class="category-tag">
-            ${cat}
-            <button type="button" data-cat="${cat}" aria-label="Remove ${cat}">
-                <i class="ti ti-x"></i>
-            </button>
-        </span>
-    `).join("");
-
-    tagsContainer.querySelectorAll("button").forEach(btn => {
+    tbody.querySelectorAll(".edit-btn").forEach(btn =>
         btn.addEventListener("click", () => {
-            selectedCategories = selectedCategories.filter(c => c !== btn.dataset.cat);
-            renderCategoryUI(selectedCategories);
-        });
-    });
-
-    // existing categories as suggestion pills (excluding already selected)
-    const existing = getExistingCategories().filter(c => !selectedCategories.includes(c));
-    suggestionsContainer.innerHTML = existing.map(cat => `
-        <button type="button" class="cat-pill" data-cat="${cat}">${cat}</button>
-    `).join("");
-
-    suggestionsContainer.querySelectorAll(".cat-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
-            selectedCategories = [btn.dataset.cat];
-            renderCategoryUI(selectedCategories);
-        });
-    });
-
-    // type a new category and press Enter to set it
-    input.onkeydown = (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            const val = input.value.trim();
-            if (val) {
-                selectedCategories = [val];
-                renderCategoryUI(selectedCategories);
-            }
-            input.value = "";
-        }
-    };
+            const product = products.find(p => p.id === Number(btn.dataset.id));
+            productModals.openEdit(product);
+        })
+    );
+    tbody.querySelectorAll(".delete-btn").forEach(btn =>
+        btn.addEventListener("click", () => productModals.openDelete(Number(btn.dataset.id)))
+    );
 }
 
-// ─── Form helpers ─────────────────────────────────────────────────────────────
+// ─── Submit / delete (called by product-modals.js) ─────────────────────────────
 
-function resetForm() {
-    document.getElementById("product-form").reset();
-    selectedCategories = [];
-    renderCategoryUI([]);
-    document.getElementById("f-category-input").value = "";
-    stockInput.placeholder = "0";
-}
-
-// ─── Modals ───────────────────────────────────────────────────────────────────
-
-function openAddModal() {
-    editingId = null;
-    resetForm();
-    document.getElementById("modal-heading").textContent = "Add product";
-    document.getElementById("submit-label").textContent = "Add product";
-    openModal("form-modal");
-}
-
-function openEditModal(id) {
-    const product = products.find(p => p.id === id);
-    if (!product) return;
-
-    editingId = id;
-    resetForm();
-
-    document.getElementById("modal-heading").textContent = "Edit product";
-    document.getElementById("submit-label").textContent = "Save changes";
-
-    nameInput.value  = product.name;
-    descInput.value  = product.description ?? "";
-    priceInput.value = product.price;
-    stockInput.value = product.stock_quantity;
-
-    renderCategoryUI(product.category ? [product.category] : []);
-
-    openModal("form-modal");
-}
-
-function openDeleteModal(id) {
-    deletingId = id;
-    openModal("delete-modal");
-}
-
-// ─── Submit ───────────────────────────────────────────────────────────────────
-
-async function handleFormSubmit(e) {
-    e.preventDefault();
-
-    const categoryValue = selectedCategories[0] ?? "General";
-
-    const payload = {
-        name:           nameInput.value.trim(),
-        category:       categoryValue,
-        description:    descInput.value.trim(),
-        price:          parseFloat(priceInput.value),
-        stock_quantity: parseInt(stockInput.value, 10),
-    };
-
-    if (
-        !payload.name ||
-        !payload.category ||
-        isNaN(payload.price) || payload.price < 0 ||
-        isNaN(payload.stock_quantity) || payload.stock_quantity < 0
-    ) {
-        showToast("Please fill in all fields correctly.", "warning");
+async function handleFormSubmit({ payload, editingId, error }) {
+    if (error) {
+        showToast(error, "warning");
         return;
     }
 
@@ -244,7 +185,7 @@ async function handleFormSubmit(e) {
             await addProduct(payload);
             showToast("Product added.", "success");
         }
-        closeModal("form-modal");
+        productModals.closeForm();
         await loadProducts();
     } catch (err) {
         console.error(err);
@@ -252,30 +193,20 @@ async function handleFormSubmit(e) {
     }
 }
 
-async function handleConfirmDelete() {
-    if (!deletingId) return;
-
+async function handleConfirmDelete(id) {
     try {
-        await deleteProduct(deletingId);
+        await deleteProduct(id);
         showToast("Product archived.", "success");
-        closeModal("delete-modal");
+        productModals.closeDelete();
         await loadProducts();
     } catch (err) {
         console.error(err);
         showToast("Failed to archive product.", "danger");
-    } finally {
-        deletingId = null;
     }
 }
 
 // ─── Event listeners ──────────────────────────────────────────────────────────
 window.addEventListener("resize", syncPageOffset);
-document.getElementById("add-product-btn").addEventListener("click", openAddModal);
-document.getElementById("cancel-form-btn").addEventListener("click", () => closeModal("form-modal"));
-document.getElementById("modal-close-btn").addEventListener("click", () => closeModal("form-modal"));
-document.getElementById("product-form").addEventListener("submit", handleFormSubmit);
-
-document.getElementById("cancel-delete-btn").addEventListener("click", () => closeModal("delete-modal"));
-document.getElementById("confirm-delete-btn").addEventListener("click", handleConfirmDelete);
+document.getElementById("add-product-btn").addEventListener("click", () => productModals.openAdd());
 
 loadProducts();

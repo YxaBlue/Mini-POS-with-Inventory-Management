@@ -1,3 +1,20 @@
+/**
+ * Renders Inventory's product table rows.
+ *
+ * This file lives alongside scrollable-table.css, which provides the shared
+ * scroll/sticky-header mechanics used by every table in the app (Inventory,
+ * Sales, Dashboard widgets). This specific render function is Inventory-only
+ * — it knows about products, stock badges, and edit/delete actions.
+ *
+ * Usage:
+ *   import { renderProductTable } from "../../components/scrollable-table/scrollable-table.js";
+ *
+ *   renderProductTable("product-tbody", products, {
+ *       onEdit:   (id) => { ... },
+ *       onDelete: (id) => { ... },
+ *   });
+ */
+
 function stockBadge(qty) {
     if (qty === 0) return `<span class="badge badge-danger">NO STOCK</span>`;
     if (qty <= 5) return `<span class="badge badge-warning">LOW STOCK</span>`;
