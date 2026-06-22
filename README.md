@@ -1,6 +1,10 @@
-# Mini POS System
+# Mini Point of Sale (POS) with Inventory Management
 
 A simple Point of Sale (POS) and Inventory Management System with a Node.js/Express backend and a vanilla HTML/CSS/JavaScript frontend for managing products, sales, and inventory.
+
+---
+
+https://github.com/user-attachments/assets/a440e3b8-759b-44bc-8a94-44c58630847b
 
 ---
 
@@ -290,4 +294,4 @@ Make sure you opened `frontend/index.html` through a local server (Live Server, 
 
 ## Author
 
-name
+Isabella Nicole R
