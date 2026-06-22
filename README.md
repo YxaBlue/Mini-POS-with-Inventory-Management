@@ -4,6 +4,10 @@ A simple Point of Sale (POS) and Inventory Management System with a Node.js/Expr
 
 ---
 
+https://github.com/user-attachments/assets/a440e3b8-759b-44bc-8a94-44c58630847b
+
+---
+
 ## Tech Stack
 
 **Frontend:**
