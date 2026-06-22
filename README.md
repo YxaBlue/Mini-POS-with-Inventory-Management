@@ -27,7 +27,6 @@ A simple Point of Sale (POS) and Inventory Management System with a Node.js/Expr
 ---
 
 ## Project Structure
-
 ```
 root/
 ├── node_modules/
@@ -62,33 +61,72 @@ frontend/
 ├── assets/
 ├── src/
 │   ├── api/
-│   │   ├── productAPI.js
-│   │   └── saleAPI.js
+│   │   └── productAPI.js
 │   ├── components/
 │   │   ├── headers/
 │   │   │   ├── header/
+│   │   │   │   ├── header.css
+│   │   │   │   └── header.js
 │   │   │   └── subheader/
+│   │   │       ├── subheader.css
+│   │   │       └── subheader.js
 │   │   ├── input/
 │   │   │   ├── cart/
+│   │   │   │   ├── cart.css
+│   │   │   │   └── cart.js
 │   │   │   ├── product-card/
+│   │   │   │   ├── product-card.css
+│   │   │   │   └── product-card.js
 │   │   │   └── search/
+│   │   │       ├── search.css
+│   │   │       └── search.js
 │   │   ├── modals/
 │   │   │   ├── modal/
+│   │   │   │   ├── modal.css
+│   │   │   │   └── modal.js
 │   │   │   ├── product-modals/
+│   │   │   │   ├── product-modals.css
+│   │   │   │   └── product-modals.js
 │   │   │   └── receipt-modal/
+│   │   │       ├── receipt-modal.css
+│   │   │       └── receipt-modal.js
 │   │   ├── navigation/
 │   │   │   └── sidebar/
+│   │   │       ├── sidebar.css
+│   │   │       └── sidebar.js
 │   │   └── output/
 │   │       ├── cat-filter/
+│   │       │   ├── cat-filter.css
+│   │       │   └── cat-filter.js
 │   │       ├── scrollable-table/
+│   │       │   ├── scrollable-table.css
+│   │       │   └── scrollable-table.js
 │   │       ├── stat-card/
+│   │       │   ├── stat-card.css
+│   │       │   └── stat-card.js
 │   │       ├── toast/
+│   │       │   ├── toast.css
+│   │       │   └── toast.js
 │   │       └── widget/
+│   │           ├── widget.css
+│   │           └── widget.js
 │   ├── pages/
 │   │   ├── dashboard/
+│   │   │   ├── dashboard.css
+│   │   │   ├── dashboard.js
+│   │   │   └── dashboard.html
 │   │   ├── inventory/
+│   │   │   ├── inventory.css
+│   │   │   ├── inventory.js
+│   │   │   └── inventory.html
 │   │   ├── pos/
+│   │   │   ├── pos.css
+│   │   │   ├── pos.js
+│   │   │   └── pos.html
 │   │   └── sales/
+│   │       ├── sales.css
+│   │       ├── sales.js
+│   │       └── sales.html
 │   └── main.js
 ├── styles/
 │   └── global-styles.css
