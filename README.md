@@ -256,4 +256,4 @@ Make sure you opened `frontend/index.html` through a local server (Live Server, 
 
 ## Author
 
-name
+Isabella Nicole R
